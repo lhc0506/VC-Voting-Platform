@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>login</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>로그인 페이지</h1>
+    <a href="/signup">join</a>
+    <form method="post">
+      <label>email : </label>
+      <input type="text" name="email">
+      <label>p/w : </label>
+      <input type="password" name="password">
+      <input type="submit" value="login">
+      <% if (message) { %>
+        <p><%= message %></p>
+      <% } %>
+    </form>
+  </body>
+</html>

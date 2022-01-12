@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>signup</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>회원가입 페이지</h1>
+    <a href="/login">login돌아가기</a>
+    <form method="post">
+      <label>email : </label>
+      <input type="text" name="email">
+      <label>p/w : </label>
+      <input type="password" name="password">
+      <label>p/w 확인: </label>
+      <input type="password" name="verifyingPassword">
+      <input type="submit" value="회원가입">
+    </form>
+    <% if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Votes</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>투표 페이지</h1>
+    <% if (isCreator) { %>
+      <h2>투표 작성자 입니다.</h2>
+      <h3>최다 득표 사항: <%= maxVotedOption %></h3>
+      <form method="post" action="">
+        <input type="submit" value="delete" name="action">
+      </form>
+    <% } %>
+    <% if (isChecked) { %>
+      <h2>이미 선택한 투표 입니다.</h2>
+    <% } else { %>
+      <h2>투표해 주세요</h2>
+    <% } %>
+    <a href="/">전체 투표 목록 돌아가기</a>
+    <div>제목: <%= selectedVote.title %></div>
+    <div>작성자: <%= selectedVote.createdBy %></div>
+    <div class="expiredDate">만료시간: <%= format(selectedVote.expiredDate, "yyyy-MM-dd / HH:mm") %></div>
+    <% let currentTime = new Date(); %>
+    <form method="post">
+      <% currentTime.setHours(currentTime.getHours()+ADD_TIME_DIFF); %>
+      <div><%= selectedVote.expiredDate > currentTime ? "진행중" : "종료"%></div>
+      <% options.forEach(function(option, index){ %>
+        <div>
+          <input
+            class="voteCheckbox"
+            type="radio"
+            name="option[]"
+            value="<%= index %>"
+            required
+            <%if(isChecked){%>
+              <%="checked"%>
+              onclick="return(false);"
+            <%}%>
+          >
+          <label><%= option.option %></label>
+        </div>
+      <% }); %>
+      <% if (!isChecked) { %>
+        <input type="submit" value="save" name="action">
+      <% } %>
+    </form>
+  </body>
+</html>

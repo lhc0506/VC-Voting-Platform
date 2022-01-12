@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>signup</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>투표생성 페이지</h1>
+    <a href="/">투표 목록 돌아가기</a>
+    <form method="post" class="optionForm">
+      <label>제목 : </label>
+      <input type="text" name="title">
+      <label>만료 날짜 : </label>
+      <input type="datetime-local" name="expiredDate"><br>
+      <label>선택 사항: </label><br>
+      <input type="string" name="option[]"><br>
+      <input type="string" name="option[]"><br>
+      <input type="button" value="addOption" class="addOption">
+      <input type="submit" value="생성">
+    </form>
+    <% if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+    <script type="text/javascript" src="/javascripts/newVote.js"></script>
+  </body>
+</html>
