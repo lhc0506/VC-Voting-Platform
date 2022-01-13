@@ -5,6 +5,8 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const flash = require("connect-flash");
 // const cookieParser = require("cookie-parser");
 // const logger = require("morgan");
 
@@ -13,11 +15,8 @@ const votingsRouter = require("./routes/votings");
 const usersRouter = require("./routes/users");
 const myVoteRouter = require("./routes/myVote");
 
-const app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+
 
 
 mongoose.connect(process.env.MONGOURI, {
@@ -33,9 +32,19 @@ db.once("open", function () {
 });
 
 // app.use(logger("dev"));
+const app = express();
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(session({
+  secret: process.env.SESSION_SECRET_KEY,
+  resave: false,
+  saveUninitialized: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);

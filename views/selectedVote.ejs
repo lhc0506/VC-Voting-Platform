@@ -8,15 +8,21 @@
     <h1>투표 페이지</h1>
     <% if (isCreator) { %>
       <h2>투표 작성자 입니다.</h2>
-      <h3>최다 득표 사항: <%= maxVotedOption %></h3>
       <form method="post" action="">
         <input type="submit" value="delete" name="action">
       </form>
     <% } %>
-    <% if (isChecked) { %>
-      <h2>이미 선택한 투표 입니다.</h2>
+    <% if (isCreator || isExpired) { %>
+      <h2>최다 득표 사항: <%= maxVotedOption %></h3>
+    <% } %>
+    <% if (isExpired) { %>
+      <h2>종료된 투표입니다.</h2>
     <% } else { %>
-      <h2>투표해 주세요</h2>
+      <% if (isChecked) { %>
+        <h2>이미 선택한 투표 입니다.</h2>
+      <% } else  { %>
+        <h2>투표해 주세요</h2>
+      <% } %>
     <% } %>
     <a href="/">전체 투표 목록 돌아가기</a>
     <div>제목: <%= selectedVote.title %></div>
@@ -24,9 +30,8 @@
     <div class="expiredDate">만료시간: <%= format(selectedVote.expiredDate, "yyyy-MM-dd / HH:mm") %></div>
     <% let currentTime = new Date(); %>
     <form method="post">
-      <% currentTime.setHours(currentTime.getHours()+ADD_TIME_DIFF); %>
-      <div><%= selectedVote.expiredDate > currentTime ? "진행중" : "종료"%></div>
-      <% options.forEach(function(option, index){ %>
+      <div><%= isExpired ? "종료" : "진행중"%></div>
+      <% selectedVote.options.forEach(function(option, index){ %>
         <div>
           <input
             class="voteCheckbox"
@@ -34,17 +39,25 @@
             name="option[]"
             value="<%= index %>"
             required
-            <%if(isChecked){%>
-              <%="checked"%>
+            <% if(option.checked){ %>
+              <%= "checked" %>
+            <%}%>
+            <% if(isChecked || isExpired){ %>
               onclick="return(false);"
             <%}%>
           >
           <label><%= option.option %></label>
         </div>
       <% }); %>
-      <% if (!isChecked) { %>
-        <input type="submit" value="save" name="action">
-      <% } %>
+      <br>
+      <input
+        type="submit"
+        value="save"
+        name="action"
+        <% if (isChecked || isExpired) { %>
+          <%= "disabled" %>
+        <% } %>
+      >
     </form>
   </body>
 </html>

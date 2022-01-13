@@ -7,12 +7,14 @@
   <body>
     <h1>로그인 페이지</h1>
     <a href="/signup">join</a>
+    <a href="/">전체 투표 목록 돌아가기</a>
     <form method="post">
       <label>email : </label>
       <input type="text" name="email">
       <label>p/w : </label>
       <input type="password" name="password">
       <input type="submit" value="login">
+      <input type="hidden" name="preUrl" value="<%= preUrl %>">
       <% if (message) { %>
         <p><%= message %></p>
       <% } %>

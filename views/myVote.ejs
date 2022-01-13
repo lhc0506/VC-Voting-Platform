@@ -8,5 +8,19 @@
     <a href="/">전체 투표 목록 돌아가기</a>
     <h1>투표 목록 페이지</h1>
     <h2>나의 투표 목록입니다.</h2>
+    <ul>
+      <div class="voteContainer">
+        <% myVotes.forEach(function(vote){ %>
+          <a class="vote" href=<%= "/votings/"+vote._id %>>
+            <div>제목: <%= vote.title %></div>
+            <div>작성자: <%= vote.createdBy %></div>
+            <div class="expiredDate">만료시간: <%= format(vote.expiredDate, "yyyy-MM-dd / HH:mm") %></div>
+            <% let currentTime = new Date(); %>
+            <% currentTime.setHours(currentTime.getHours()+ADD_TIME_DIFF); %>
+            <div><%= vote.expiredDate > currentTime ? "진행중" : "종료"%></div>
+          </a>
+        <% }); %>
+      </div>
+    </ul>
   </body>
 </html>
