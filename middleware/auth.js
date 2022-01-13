@@ -11,7 +11,6 @@ exports.auth = async function (req, res, next) {
     next();
   }
   else {
-    console.log(req.originalUrl, req.headers.referer)
     req.flash("preUrl", req.originalUrl);
     res.redirect("/login");
   }

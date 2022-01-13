@@ -9,13 +9,21 @@ a {
 }
 
 .voteContainer {
-  width: 600px;
+  width: 800px;
   margin-bottom: 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .vote {
+  position: relative;
+  height: 300px;
   border: 1px solid black;
   margin: 10px;
+}
+
+.voteContents {
+  position: absolute;
+  bottom: 5px;
+  margin-left: 5px;
 }

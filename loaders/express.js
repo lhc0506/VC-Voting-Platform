@@ -1,11 +1,22 @@
 const express = require("express");
-const path = require("path");
-const app = require("../app")
-expressLoader = async () => {
-  // view engine setup
-  app.set("views", path.join(__dirname, "views"));
-  app.set("view engine", "ejs");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
 
+function expressLoader(expressApp) {
+  expressApp.set("views");
+  expressApp.set("view engine", "ejs");
+
+  expressApp.use(session({
+    secret: process.env.SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+  }));
+
+  expressApp.use(express.json());
+  expressApp.use(express.urlencoded({ extended: false }));
+  expressApp.use(cookieParser());
+  expressApp.use(flash());
 }
 
 module.exports = expressLoader;

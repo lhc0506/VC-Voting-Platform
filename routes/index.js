@@ -4,12 +4,12 @@ const router = express.Router();
 const User = require("../model/User");
 const Vote = require("../model/Vote");
 const jwt = require("jsonwebtoken");
+
 const { body, validationResult } = require("express-validator");
 const { auth } = require("../middleware/auth");
 const { format } = require("date-fns");
 const { ADD_TIME_DIFF } = require("../src/constants");
 
-/* GET home page. */
 router.get("/", async (req, res, next) => {
   const isLoggedIn = req.cookies.user && Boolean(jwt.verify(req.cookies.user, process.env.JWT_SECRET_KEY).email);
   const votes = await Vote.find({}).lean();

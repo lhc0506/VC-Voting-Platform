@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
+    <%- include("header.ejs") %>
     <h1>투표 페이지</h1>
     <% if (isCreator) { %>
       <h2>투표 작성자 입니다.</h2>
@@ -24,13 +25,8 @@
         <h2>투표해 주세요</h2>
       <% } %>
     <% } %>
-    <a href="/">전체 투표 목록 돌아가기</a>
-    <div>제목: <%= selectedVote.title %></div>
-    <div>작성자: <%= selectedVote.createdBy %></div>
-    <div class="expiredDate">만료시간: <%= format(selectedVote.expiredDate, "yyyy-MM-dd / HH:mm") %></div>
-    <% let currentTime = new Date(); %>
+    <%- include("showingVote", {vote: selectedVote}); %>
     <form method="post">
-      <div><%= isExpired ? "종료" : "진행중"%></div>
       <% selectedVote.options.forEach(function(option, index){ %>
         <div>
           <input

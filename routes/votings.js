@@ -117,6 +117,7 @@ router.get("/:id", async (req, res, next) => {
       isCreator,
       isChecked,
       format,
+      ADD_TIME_DIFF,
     });
   } catch (error) {
     next(error);
@@ -127,7 +128,7 @@ router.post("/:id", auth, async (req, res, next) => {
   const userEmail = req.app.locals.userEmail;
   const userId = req.app.locals.userId;
   const selectedVoteId = req.params.id;
-  console.log(req.body)
+
   if (req.body.action === "save") {
     // if (!req.body["option[]"]) {
     // }
@@ -148,10 +149,6 @@ router.post("/:id", auth, async (req, res, next) => {
     userDb.save();
     res.redirect("/");
   }
-});
-
-router.delete("/:id", async (req, res, next) => {
-  console.log(123123);
 });
 
 module.exports = router;

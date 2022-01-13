@@ -1,0 +1,7 @@
+<div>제목: <%= vote.title %></div>
+<div>작성자: <%= vote.createdBy %></div>
+<div>만료 날짜: <%= format(vote.expiredDate, "yyyy-MM-dd") %></div>
+<div>만료 시간: <%= format(vote.expiredDate, "HH:mm") %></div>
+<% let currentTime = new Date(); %>
+<% currentTime.setHours(currentTime.getHours()+ADD_TIME_DIFF); %>
+<div><%= vote.expiredDate > currentTime ? "진행중" : "종료"%></div>
