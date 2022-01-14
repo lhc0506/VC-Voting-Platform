@@ -1,12 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
-const User = require("../model/User");
-const Vote = require("../model/Vote");
 const { auth } = require("../middleware/auth");
-const { format, add } = require("date-fns");
-const { ADD_TIME_DIFF } = require("../src/constants");
-const { getNewVote, createNewVote, getSelectedVote, voteOption } = require("../controller/newVoteController");
+const { getNewVote, createNewVote } = require("../controller/newVoteController");
+const { getSelectedVote, voteOption, deleteVote } = require("../controller/selectedVoteController");
 const { validateNewVote, validateParamsIsObjectId } = require("../middleware/validate");
 
 router.get("/new", auth, getNewVote);
@@ -18,18 +14,6 @@ router.get("/success", auth, (req, res, next) => {
 
 router.get("/:id", validateParamsIsObjectId, getSelectedVote);
 router.post("/:id", auth, validateParamsIsObjectId, voteOption);
-router.delete(":id", )
-// const userId = req.app.locals.userId;
-  // if (req.body.action === "delete") {
-  //   await Vote.findByIdAndDelete(selectedVoteId).exec();
-  //   const userDb = await User.findById(userId).exec();
-  //   const voteIndex = userDb.createdVotes.indexOf(selectedVoteId);
-
-  //   userDb.createdVotes.splice(voteIndex, 1);
-  //   userDb.save();
-  //   res.redirect("/");
-  // }
-// }
-
+router.delete("/:id", auth, validateParamsIsObjectId, deleteVote);
 
 module.exports = router;

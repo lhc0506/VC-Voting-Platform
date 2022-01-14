@@ -7,9 +7,7 @@ const { ADD_TIME_DIFF } = require("../src/constants");
 
 router.get("/", auth, async (req, res, next) => {
   try {
-    const userEmail = req.app.locals.userEmail;
     const userId = req.app.locals.userId;
-
     const userDb = await User.findById(userId).populate("createdVotes").lean();
     const myVotes = userDb.createdVotes;
 

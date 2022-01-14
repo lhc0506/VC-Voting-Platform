@@ -9,9 +9,7 @@
     <h1>투표 페이지</h1>
     <% if (isCreator) { %>
       <h2>투표 작성자 입니다.</h2>
-      <form method="post" action="">
-        <input type="submit" class="delete" value="delete" name="action">
-      </form>
+      <input type="button" class="delete" value="delete" name="action">
     <% } %>
     <% if (isCreator || isExpired) { %>
       <h2>최다 득표 사항: <%= maxVotedOption %></h3>
@@ -55,5 +53,6 @@
         <% } %>
       >
     </form>
+    <script src="/javascripts/deleteVote.js"></script>
   </body>
 </html>
