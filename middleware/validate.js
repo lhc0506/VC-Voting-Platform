@@ -47,7 +47,6 @@ exports.validateNewVote = async (req, res, next) => {
     const { title, expiredDate } = req.body;
     const options = req.body["option[]"];
     await voteJoiSchema.validateAsync({ title, expiredDate, options });
-    console.log(options)
     next();
   } catch (error) {
     error.status = 400;

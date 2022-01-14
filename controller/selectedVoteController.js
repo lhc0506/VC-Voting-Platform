@@ -3,7 +3,7 @@ const Vote = require("../model/Vote");
 const { format } = require("date-fns");
 const { ADD_TIME_DIFF } = require("../src/constants");
 const User = require('../model/User');
-
+//bcyrpt-js로 바꾸기
 exports.getSelectedVote = async (req, res, next) => {
   try {
     const userEmail = req.cookies.user && jwt.verify(req.cookies.user, process.env.JWT_SECRET_KEY).email;
@@ -65,20 +65,17 @@ exports.voteOption = async (req, res, next) => {
 };
 
 exports.deleteVote = async (req, res, next) => {
-  try {
-    const userId = req.app.locals.userId;
-    const selectedVoteId = req.params.id;
-    const a = await Vote.findByIdAndDelete(selectedVoteId).exec();
+  const userId = req.app.locals.userId;
+  const selectedVoteId = req.params.id;
+  await Vote.findByIdAndDelete(selectedVoteId).exec();
 
-    const userDb = await User.findById(userId).exec();
-    const voteIndex = userDb.createdVotes.indexOf(selectedVoteId);
-    userDb.createdVotes.splice(voteIndex, 1);
-    await userDb.save();
+  const userDb = await User.findById(userId).exec();
+  const voteIndex = userDb.createdVotes.indexOf(selectedVoteId);
+  userDb.createdVotes.splice(voteIndex, 1);
+  await userDb.save();
 
-    res.json({
-      "url": req.headers.origin,
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.json({
+    "url": req.headers.origin,
+  });
+
 };

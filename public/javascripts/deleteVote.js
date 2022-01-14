@@ -5,11 +5,9 @@ deleteButton.addEventListener("click", () => {
     redirect: "follow",
   })
   .then((response) => {
-    console.log(response)
-    return response.json()})
-  .then((response) => {
-    console.log(response.url)
-      window.location.href = response.url;
+    return response.json()
   })
-  // .catch()
+  .then((response) => {
+    window.location.href = response.url;
+  });
 });
