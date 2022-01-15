@@ -2,10 +2,10 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 
 const userJoiSchema = Joi.object({
-  email: Joi.string(),
-      // .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
+  email: Joi.string()
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
   password: Joi.string()
-      // .min(8)
+      .min(8)
       .max(16),
   verifyingPassword: Joi.ref("password"),
   access_token: [
