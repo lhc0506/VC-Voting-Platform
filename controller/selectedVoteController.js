@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const Vote = require("../model/Vote");
 const { format } = require("date-fns");
 const { ADD_TIME_DIFF } = require("../src/constants");
-const User = require('../model/User');
+const User = require("../model/User");
 
 exports.getSelectedVote = async (req, res, next) => {
   try {
@@ -77,5 +77,4 @@ exports.deleteVote = async (req, res, next) => {
   res.json({
     "url": req.headers.origin,
   });
-
 };

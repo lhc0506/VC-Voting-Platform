@@ -35,5 +35,3 @@ exports.createNewVote = async (req, res, next) => {
     next(error);
   }
 };
-
-

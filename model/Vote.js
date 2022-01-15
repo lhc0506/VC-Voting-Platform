@@ -30,7 +30,6 @@ const VoteSchema = mongoose.Schema({
     required: true,
   },
   options: [ContentsSchema],
-
 });
 
 module.exports = mongoose.model("Vote", VoteSchema);
