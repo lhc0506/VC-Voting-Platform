@@ -1,3 +1,5 @@
+const User = require("../model/User");
+
 exports.showSignup = (req, res, next) => {
   res.render("signup", {
     message: null,
