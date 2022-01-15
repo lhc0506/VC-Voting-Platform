@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 const { isEmail } = require("validator");
 
 const ContentsSchema = mongoose.Schema({
@@ -9,7 +8,7 @@ const ContentsSchema = mongoose.Schema({
   },
   checkedBy: [{
     type: String,
-    // ref: "User",
+    ref: "User",
   }],
 });
 
@@ -17,10 +16,10 @@ const VoteSchema = mongoose.Schema({
   createdBy: {
     type: String,
     required: true,
-    // validate: {
-    //   validator: isEmail,
-    //   message: "invalid Email",
-    // }
+    validate: {
+      validator: isEmail,
+      message: "invalid Email",
+    }
   },
   title: {
     type: String,

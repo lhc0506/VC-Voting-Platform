@@ -4,20 +4,15 @@ const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 const { isEmail } = require("validator");
 
-// const Votes = mongoose.Schema({
-//   type: mongoose.ObjectId,
-//   ref: "User",
-// });
-
 const UserSchema = mongoose.Schema({
   email: {
     type: String,
     unique: true,
     required: true,
-    // validate: {
-    //   validator: isEmail,
-    //   message: "invalid Email",
-    // }
+    validate: {
+      validator: isEmail,
+      message: "invalid Email",
+    }
   },
   password: {
     type: String,

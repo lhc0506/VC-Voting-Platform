@@ -28,7 +28,6 @@ exports.doLogin = async (req, res, next) => {
     const newToken = jwt.sign({
       email
     }, process.env.JWT_SECRET_KEY, {
-      // expiresIn: '1h'
     });
 
     res.cookie("user", newToken);

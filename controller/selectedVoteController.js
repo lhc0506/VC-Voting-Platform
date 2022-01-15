@@ -3,7 +3,7 @@ const Vote = require("../model/Vote");
 const { format } = require("date-fns");
 const { ADD_TIME_DIFF } = require("../src/constants");
 const User = require('../model/User');
-//bcyrpt-js로 바꾸기
+
 exports.getSelectedVote = async (req, res, next) => {
   try {
     const userEmail = req.cookies.user && jwt.verify(req.cookies.user, process.env.JWT_SECRET_KEY).email;
