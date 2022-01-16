@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema({
     validate: {
       validator: isEmail,
       message: "invalid Email",
-    }
+    },
   },
   password: {
     type: String,

@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 
 const userJoiSchema = Joi.object({
   email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
+  .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
   password: Joi.string()
-      .min(8)
-      .max(16),
+  .min(8)
+  .max(16),
   verifyingPassword: Joi.ref("password"),
   access_token: [
-      Joi.string(),
-      Joi.number()
+    Joi.string(),
+    Joi.number()
   ],
 });
 

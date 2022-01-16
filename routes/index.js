@@ -4,7 +4,7 @@ const User = require("../model/User");
 
 const { getAll } = require("../controller/indexController");
 const { showSignup, createUser } = require("../controller/signupController");
-const{ showLogin, doLogin } = require("../controller/loginController");
+const{ showLogin, login } = require("../controller/loginController");
 const{ validateSignup, validateLogin } = require("../middleware/validate");
 
 router.get("/", getAll);
@@ -13,7 +13,7 @@ router.get("/signup", showSignup);
 router.post("/signup", validateSignup, createUser);
 
 router.get("/login", showLogin);
-router.post("/login", validateLogin, doLogin);
+router.post("/login", validateLogin, login);
 
 router.get("/logout", (req, res, next) => {
   res.clearCookie("user");
