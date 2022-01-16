@@ -2,19 +2,19 @@ const jwt = require("jsonwebtoken");
 const Vote = require("../model/Vote");
 const { format } = require("date-fns");
 const { ADD_TIME_DIFF } = require("../src/constants");
-const User = require('../model/User');
+const User = require("../model/User");
 
 exports.getSelectedVote = async (req, res, next) => {
   try {
     const userEmail = req.cookies.user && jwt.verify(req.cookies.user, process.env.JWT_SECRET_KEY).email;
     const selectedVoteId = req.params.id;
     const selectedVote = await Vote.findById(selectedVoteId).lean();
-    const { createdBy, options } = selectedVote;
+    const { createdBy, options, expiredDate } = selectedVote;
     const isCreator = userEmail === createdBy;
 
-    let currentTime = new Date();
-    currentTime.setHours(currentTime.getHours()+ADD_TIME_DIFF);
-    const isExpired = selectedVote.expiredDate < currentTime;
+    const currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() + ADD_TIME_DIFF);
+    const isExpired = expiredDate < currentTime;
 
     let isChecked = false;
     let maxVotedOptionIndex = 0;
@@ -77,5 +77,4 @@ exports.deleteVote = async (req, res, next) => {
   res.json({
     "url": req.headers.origin,
   });
-
 };

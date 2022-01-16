@@ -11,29 +11,34 @@ exports.showLogin = (req, res, next) => {
   });
 };
 
-exports.doLogin = async (req, res, next) => {
+exports.login = async (req, res, next) => {
   const { email, password, preUrl } = req.body;
 
   try {
-    const user = await User.findOne({ email: email }).lean();
+    const user = await User.findOne({ email }).lean();
     const validPassword = user ? await bcrypt.compare(password, user.password) : null;
 
-    if (!user || !validPassword) {
+    if (!user) {
       return res.render("login", {
-        message: "이메일이나 비밀번호가 올바르지 않습니다.",
+        message: "해당 이메일이 없습니다.",
+        preUrl,
+      });
+    }
+
+    if (!validPassword) {
+      return res.render("login", {
+        message: "비밀번호가 올바르지 않습니다.",
         preUrl,
       });
     }
 
     const newToken = jwt.sign({
       email
-    }, process.env.JWT_SECRET_KEY, {
-    });
+    }, process.env.JWT_SECRET_KEY);
 
     res.cookie("user", newToken);
 
     preUrl ? res.redirect(preUrl) : res.redirect("/");
-
   } catch (error) {
     next(error);
   }
