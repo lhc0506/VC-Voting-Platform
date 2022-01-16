@@ -7,10 +7,13 @@ const User = require("../model/User");
 exports.getSelectedVote = async (req, res, next) => {
   try {
     const userEmail = req.cookies.user && jwt.verify(req.cookies.user, process.env.JWT_SECRET_KEY).email;
+    const user = await User.findOne({ email: userEmail }).lean();
+    const userId = user["_id"];
+
     const selectedVoteId = req.params.id;
-    const selectedVote = await Vote.findById(selectedVoteId).lean();
+    const selectedVote = await Vote.findById(selectedVoteId).populate("createdBy").lean();
     const { createdBy, options, expiredDate } = selectedVote;
-    const isCreator = userEmail === createdBy;
+    const isCreator = userId.toString() === createdBy["_id"].toString();
 
     const currentTime = new Date();
     currentTime.setHours(currentTime.getHours() + ADD_TIME_DIFF);
@@ -29,7 +32,7 @@ exports.getSelectedVote = async (req, res, next) => {
         maxVotedOptionIndex = index;
       }
 
-      if (checkedBy.includes(userEmail)) {
+      if (checkedBy.some((user) => user.equals(userId))) {
         optionObject.checked = true;
         isChecked = true;
       }
@@ -69,10 +72,15 @@ exports.deleteVote = async (req, res, next) => {
   const selectedVoteId = req.params.id;
   await Vote.findByIdAndDelete(selectedVoteId).exec();
 
-  const userDb = await User.findById(userId).exec();
-  const voteIndex = userDb.createdVotes.indexOf(selectedVoteId);
-  userDb.createdVotes.splice(voteIndex, 1);
-  await userDb.save();
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      $pull: { "createdVotes": userId }
+    }
+    ).exec();
+  // const voteIndex = userDb.createdVotes.indexOf(selectedVoteId);
+  // userDb.createdVotes.splice(voteIndex, 1);
+  // await userDb.save();
 
   res.json({
     "url": req.headers.origin,

@@ -11,8 +11,9 @@ exports.getNewVote = (req, res, next) => {
 
 exports.createNewVote = async (req, res, next) => {
   try {
-    const userEmail = req.app.locals.userEmail ;
-    const user = await User.findOne({ email: userEmail }).exec();
+    const userEmail = req.app.locals.userEmail;
+    const userId = req.app.locals.userId;
+    const user = await User.findById(userId).exec();
 
     const { title } = req.body;
     let { expiredDate } = req.body;
@@ -21,7 +22,7 @@ exports.createNewVote = async (req, res, next) => {
     const optionsInSchema = options.map((option) => { return { option } });
 
     const newVote = await Vote.create({
-      createdBy: userEmail,
+      createdBy: userId,
       title,
       expiredDate,
       options: optionsInSchema,
