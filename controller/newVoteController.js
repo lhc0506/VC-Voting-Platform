@@ -19,7 +19,7 @@ exports.createNewVote = async (req, res, next) => {
     let { expiredDate } = req.body;
     expiredDate = add(new Date(expiredDate), { hours: ADD_TIME_DIFF });
     const options = req.body["option[]"];
-    const optionsInSchema = options.map((option) => { return { option } });
+    const optionsInSchema = options.map((option) => ({ option }));
 
     const newVote = await Vote.create({
       createdBy: userId,

@@ -8,12 +8,12 @@ exports.getSelectedVote = async (req, res, next) => {
   try {
     const userEmail = req.cookies.user && jwt.verify(req.cookies.user, process.env.JWT_SECRET_KEY).email;
     const user = await User.findOne({ email: userEmail }).lean();
-    const userId = user["_id"];
+    const userId = user?.["_id"];
 
     const selectedVoteId = req.params.id;
     const selectedVote = await Vote.findById(selectedVoteId).populate("createdBy").lean();
     const { createdBy, options, expiredDate } = selectedVote;
-    const isCreator = userId.toString() === createdBy["_id"].toString();
+    const isCreator = userId?.toString() === createdBy["_id"].toString();
 
     const currentTime = new Date();
     currentTime.setHours(currentTime.getHours() + ADD_TIME_DIFF);
